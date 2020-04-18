@@ -70,6 +70,15 @@ import Logo from "../components/Logo.vue";
   }
 })
 export default class IndexPage extends Vue {
+  middleware({ store, redirect }) {
+    // console.log(this.$auth.loggedIn);
+    console.log(store.state.auth.loggedIn);
+    // window.console.log(store.state.auth.loggedIn);
+    // if (store.state.auth.loggedIn) {
+    //   return redirect("/");
+    // }
+  }
+
   aaa = "";
 
   // async created() {

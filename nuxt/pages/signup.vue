@@ -53,10 +53,14 @@
 <script lang="ts">
 import { Vue, Component, Watch } from "nuxt-property-decorator";
 import Logo from "../components/Logo.vue";
-import { SignupFromDto } from "../domains/signup/SignupFromDto";
+import { SignupFromDto } from "../domains/auth/SignupFromDto";
+import { CreateAuthApplication } from "../creates/auth/CreateAuthApplication";
 
 @Component
 export default class extends Vue {
+  middleware({ store }) {
+    console.log(store.state.auth.loggedIn);
+  }
   valid = false;
   confirmValid = false;
   forms: SignupFromDto = {
@@ -110,14 +114,33 @@ export default class extends Vue {
     }
   }
 
-  submit() {
-    console.log(this.forms);
+  async submit() {
+    const aaa = await CreateAuthApplication().Signup(this.forms);
+    console.log("page", aaa);
   }
+  // async submit() {
+  // try {
+  //   await this.$auth.loginWith("local", {
+  //     data: {
+  //       name: "kei",
+  //       password: "123456"
+  //     }
+  //   });
+  //   // this.$router.push("/profile");
+  // } catch (e) {
+  //   this.error = true;
+  // }
+  // }
 
   showSignin() {
     this.$router.push({
       path: `/signin`
     });
   }
+
+  // mounted() {
+  //   console.log(this.$auth.user);
+  //   console.log(this.$auth.loggedIn);
+  // }
 }
 </script>

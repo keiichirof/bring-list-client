@@ -36,7 +36,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: ["@nuxtjs/axios"],
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -46,6 +46,12 @@ export default {
     theme: {
       dark: true,
     },
+  },
+  /*
+   ** env configuration
+   */
+  env: {
+    API_URL: process.env.API_URL || "http://localhost:18080",
   },
   /*
    ** Build configuration

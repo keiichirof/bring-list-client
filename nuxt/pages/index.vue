@@ -18,18 +18,13 @@
           </p>
           <p>
             For more information on Vuetify, check out the
-            <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-            >documentation</a>.
+            <a href="https://vuetifyjs.com" target="_blank">documentation</a>.
           </p>
           <p>
             If you have questions, please join the official
-            <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              title="chat"
-            >discord</a>.
+            <a href="https://chat.vuetifyjs.com/" target="_blank" title="chat"
+              >discord</a
+            >.
           </p>
           <p>
             Find a bug? Report it on the github
@@ -37,7 +32,8 @@
               href="https://github.com/vuetifyjs/vuetify/issues"
               target="_blank"
               title="contribute"
-            >issue board</a>.
+              >issue board</a
+            >.
           </p>
           <p>
             Thank you for developing with Vuetify and I look forward to bringing
@@ -51,7 +47,9 @@
           <hr class="my-3" />
           <a href="https://nuxtjs.org/" target="_blank">Nuxt Documentation</a>
           <br />
-          <a href="https://github.com/nuxt/nuxt.js" target="_blank">Nuxt GitHub</a>
+          <a href="https://github.com/nuxt/nuxt.js" target="_blank"
+            >Nuxt GitHub</a
+          >
         </v-card-text>
         <v-card-actions>
           <v-spacer />
@@ -64,7 +62,7 @@
 <script lang="ts">
 import { Vue, Component } from "nuxt-property-decorator";
 import Logo from "../components/Logo.vue";
-import { CreateListApplication } from "../creates/list/CreateListApplication";
+// import { CreateListApplication } from "../creates/list/CreateListApplication";
 
 @Component({
   components: {
@@ -74,8 +72,8 @@ import { CreateListApplication } from "../creates/list/CreateListApplication";
 export default class IndexPage extends Vue {
   aaa = "";
 
-  async created() {
-    this.aaa = await CreateListApplication().CreateList();
-  }
+  // async created() {
+  //   this.aaa = await CreateListApplication().CreateList();
+  // }
 }
 </script>

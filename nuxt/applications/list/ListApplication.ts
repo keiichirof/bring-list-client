@@ -1,11 +1,11 @@
-import { ListRequester } from "@/domains/list/ListRequester";
+import { ListRepository } from "@/domains/list/ListRepository";
 import { ListFormDto } from "@/domains/list/ListFormDto";
 
 // リストの機能を提供する
 export class ListApplication {
-  private listRequester: ListRequester;
+  private listRequester: ListRepository;
 
-  constructor(listRequester: ListRequester) {
+  constructor(listRequester: ListRepository) {
     this.listRequester = listRequester;
   }
 

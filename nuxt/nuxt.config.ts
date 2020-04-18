@@ -1,5 +1,8 @@
 export default {
   mode: "universal",
+  router: {
+    base: "/"
+  },
   /*
    ** Headers of the page
    */
@@ -12,10 +15,10 @@ export default {
       {
         hid: "description",
         name: "description",
-        content: process.env.npm_package_description || "",
-      },
+        content: process.env.npm_package_description || ""
+      }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
   /*
    ** Customize the progress-bar color
@@ -42,16 +45,15 @@ export default {
    ** https://github.com/nuxt-community/vuetify-module
    */
   vuetify: {
-    customVariables: ["~/assets/variables.scss"],
     theme: {
-      dark: true,
-    },
+      dark: false
+    }
   },
   /*
    ** env configuration
    */
   env: {
-    API_URL: process.env.API_URL || "http://localhost:18080",
+    API_URL: process.env.API_URL || "http://localhost:18080"
   },
   /*
    ** Build configuration
@@ -60,10 +62,10 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config: any, ctx: any) {},
+    extend(config: any, ctx: any) {}
   },
   typescript: {
     typeCheck: true,
-    ignoreNotFoundWarnings: true,
-  },
+    ignoreNotFoundWarnings: true
+  }
 };

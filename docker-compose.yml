@@ -18,3 +18,9 @@ services:
 
 volumes:
   npm_cache:
+# 本番モード
+#   command: >
+# ash -c "
+#   npm i --silent &&
+#   npm run build &&
+#   npm run start"

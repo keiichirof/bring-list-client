@@ -8,24 +8,23 @@
     "dev": "HOST=0.0.0.0 PORT=3000 nuxt-ts",
     "build": "nuxt-ts build",
     "generate": "nuxt-ts generate",
-    "start": "nuxt-ts start",
+    "start": "nuxt-ts start --hostname 0.0.0.0 --port 3000 --max_old_space_size=1500 --optimize_for_size",
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@nuxt/typescript-build": "^0.6.5",
     "@nuxt/typescript-runtime": "^0.4.5",
     "@nuxtjs/axios": "^5.9.7",
-    "@types/node": "^13.11.1",
-    "nuxt": "^2.0.0"
-  },
-  "devDependencies": {
-    "@nuxt/typescript-build": "^0.6.5",
     "@nuxtjs/eslint-config-typescript": "^1.0.2",
-    "@nuxtjs/vuetify": "^1.0.0",
-    "@vue/test-utils": "^1.0.0-beta.27",
-    "babel-jest": "^24.1.0",
-    "jest": "^24.1.0",
+    "@nuxtjs/vuetify": "^1.11.0",
+    "@types/node": "^13.11.1",
+    "@vue/test-utils": "^1.0.0-beta.33",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "nuxt": "^2.0.0",
     "nuxt-property-decorator": "^2.5.1",
-    "ts-jest": "^25.0.0",
-    "vue-jest": "^4.0.0-0"
-  }
+    "ts-jest": "^25.4.0",
+    "vue-jest": "^4.0.0-beta.2"
+  },
+  "devDependencies": {}
 }

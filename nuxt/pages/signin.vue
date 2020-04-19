@@ -76,6 +76,9 @@ export default class extends Vue {
       this.$auth.setUser({
         email: this.forms.email
       });
+      this.$router.push({
+        path: "/"
+      });
     } catch (err) {
       if (err.response.status === 401) {
         this.authorizeError = true;

@@ -1,11 +1,7 @@
 <template>
   <v-layout>
     <v-flex class="text-center">
-      <img
-        src="/v.png"
-        alt="Vuetify.js"
-        class="mb-5"
-      >
+      <img src="/v.png" alt="Vuetify.js" class="mb-5" />
       <blockquote class="blockquote">
         &#8220;First, solve the problem. Then, write the code.&#8221;
         <footer>
@@ -17,3 +13,23 @@
     </v-flex>
   </v-layout>
 </template>
+
+<script lang="ts">
+import { Vue, Component } from "nuxt-property-decorator";
+import Logo from "../components/Logo.vue";
+
+@Component({
+  components: {
+    Logo
+  }
+})
+export default class extends Vue {
+  middleware: "isSignin";
+  aaa = "";
+
+  async created() {
+    console.log(this.$auth.loggedIn);
+    console.log(this.$auth);
+  }
+}
+</script>

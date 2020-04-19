@@ -39,7 +39,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [{ src: "~/plugins/localStorage.js", ssr: false }],
   /*
    ** Nuxt.js dev-modules
    */
@@ -53,7 +53,16 @@ export default {
       login: "/signup", // 未ログイン時に認証ルートへアクセスした際のリダイレクトURL
       logout: "/signin", // ログアウト時のリダイレクトURL
       callback: false, // Oauth認証等で必要となる コールバックルート
-      home: "/inspire" // ログイン後のリダイレクトURL
+      home: false // ログイン後のリダイレクトURL
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: false,
+          user: false,
+          logout: false
+        }
+      }
     }
   },
   /*

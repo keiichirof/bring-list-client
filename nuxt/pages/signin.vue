@@ -3,12 +3,7 @@
     <v-card md="10" class="pa-6" width="500">
       <v-card-title>ログイン</v-card-title>
       <v-form ref="form">
-        <v-text-field
-          v-model="forms.name"
-          :counter="10"
-          :rules="nameRules"
-          label="ユーザ名"
-        ></v-text-field>
+        <v-text-field v-model="forms.name" :counter="10" :rules="nameRules" label="ユーザ名"></v-text-field>
 
         <v-text-field
           v-model="forms.password"
@@ -21,12 +16,8 @@
           @click:append="hidePassword = !hidePassword"
         ></v-text-field>
 
-        <v-btn color="primary" @click="submit" :disabled="!valid"
-          >ログインする</v-btn
-        >
-        <v-btn color="info" class="ml-4" @click="showSignup"
-          >アカウントをお持ちでない方</v-btn
-        >
+        <v-btn color="primary" @click="submit" :disabled="!valid">ログインする</v-btn>
+        <v-btn color="info" class="ml-4" @click="showSignup">アカウントをお持ちでない方</v-btn>
       </v-form>
     </v-card>
   </v-layout>
@@ -34,7 +25,7 @@
 <script lang="ts">
 import { Vue, Component, Watch } from "nuxt-property-decorator";
 import Logo from "../components/Logo.vue";
-import { SignupFromDto } from "../domains/signup/SignupFromDto";
+import { SignupFromDto } from "../domains/auth/SignupFromDto";
 
 @Component
 export default class extends Vue {

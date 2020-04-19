@@ -3,16 +3,14 @@
     <v-card md="10" class="pa-6" width="500">
       <v-card-title>アカウントの作成</v-card-title>
       <v-form ref="form">
-        <v-text-field
-          v-model="forms.name"
-          :counter="10"
-          :rules="nameRules"
-          label="ユーザ名"
-        ></v-text-field>
+        <v-text-field v-model="forms.name" :counter="10" :rules="nameRules" label="ユーザ名"></v-text-field>
         <v-text-field
           v-model="forms.email"
           :rules="emailRules"
           label="メールアドレス"
+          :error-messages="
+            emailerror ? 'こちらのメールアドレスは既に登録されています' : ''
+          "
         ></v-text-field>
 
         <v-text-field
@@ -37,15 +35,9 @@
           @click:append="hidePasswordConfirm = !hidePasswordConfirm"
         ></v-text-field>
 
-        <v-btn
-          color="primary"
-          @click="submit"
-          :disabled="!valid || !confirmValid"
-          >アカウントを作成する</v-btn
-        >
-        <v-btn color="info" class="ml-4" @click="showSignin"
-          >アカウントをお持ちの方</v-btn
-        >
+        <v-btn color="primary" @click="submit" :disabled="!valid || !confirmValid">アカウントを作成する</v-btn>
+        <v-btn color="info" class="ml-4" @click="showSignin">アカウントをお持ちの方</v-btn>
+        <!-- <v-btn @click="aa">dswwd</v-btn> -->
       </v-form>
     </v-card>
   </v-layout>
@@ -58,9 +50,6 @@ import { CreateAuthApplication } from "../creates/auth/CreateAuthApplication";
 
 @Component
 export default class extends Vue {
-  middleware({ store }) {
-    console.log(store.state.auth.loggedIn);
-  }
   valid = false;
   confirmValid = false;
   forms: SignupFromDto = {
@@ -73,6 +62,7 @@ export default class extends Vue {
     (v: string) => !!v || "ユーザ名は必須です。",
     (v: string) => (v && v.length <= 10) || "ユーザ名は最大10文字です。"
   ];
+  emailerror = false;
   emailRules = [
     (v: string) => !!v || "メールアドレスは必須です。",
     (v: string) =>
@@ -115,32 +105,24 @@ export default class extends Vue {
   }
 
   async submit() {
-    const aaa = await CreateAuthApplication().Signup(this.forms);
-    console.log("page", aaa);
+    try {
+      const json_token = await CreateAuthApplication().Signup(this.forms);
+      this.$auth.setToken("local", json_token.token);
+      this.$auth.setUser({
+        email: this.forms.email,
+        name: this.forms.name
+      });
+    } catch (err) {
+      if (err.response.status === 409) {
+        this.emailerror = true;
+      }
+    }
   }
-  // async submit() {
-  // try {
-  //   await this.$auth.loginWith("local", {
-  //     data: {
-  //       name: "kei",
-  //       password: "123456"
-  //     }
-  //   });
-  //   // this.$router.push("/profile");
-  // } catch (e) {
-  //   this.error = true;
-  // }
-  // }
 
   showSignin() {
     this.$router.push({
       path: `/signin`
     });
   }
-
-  // mounted() {
-  //   console.log(this.$auth.user);
-  //   console.log(this.$auth.loggedIn);
-  // }
 }
 </script>

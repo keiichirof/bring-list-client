@@ -1,3 +1,11 @@
+import VueRouter from "vue-router";
+declare module "vue/types/vue" {
+  interface Vue {
+    $auth: any;
+    $router: VueRouter;
+  }
+}
+
 export default {
   mode: "universal",
   router: {
@@ -40,6 +48,14 @@ export default {
    ** Nuxt.js modules
    */
   modules: ["@nuxtjs/axios", "@nuxtjs/auth"],
+  auth: {
+    redirect: {
+      login: "/signup", // 未ログイン時に認証ルートへアクセスした際のリダイレクトURL
+      logout: "/signin", // ログアウト時のリダイレクトURL
+      callback: false, // Oauth認証等で必要となる コールバックルート
+      home: "/inspire" // ログイン後のリダイレクトURL
+    }
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module

@@ -17,6 +17,7 @@
 <script lang="ts">
 import { Vue, Component } from "nuxt-property-decorator";
 import Logo from "../components/Logo.vue";
+import { Context } from "@nuxt/types";
 
 @Component({
   components: {
@@ -24,12 +25,10 @@ import Logo from "../components/Logo.vue";
   }
 })
 export default class extends Vue {
-  middleware: "isSignin";
-  aaa = "";
-
-  async created() {
-    console.log(this.$auth.loggedIn);
-    console.log(this.$auth);
+  middleware({ store, redirect }: Context) {
+    if (!store.state.auth.loggedIn) {
+      return redirect("/signin");
+    }
   }
 }
 </script>

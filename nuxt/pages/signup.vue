@@ -3,16 +3,14 @@
     <v-card md="10" class="pa-6" width="500">
       <v-card-title>アカウントの作成</v-card-title>
       <v-form ref="form">
-        <v-text-field
-          v-model="forms.name"
-          :counter="10"
-          :rules="nameRules"
-          label="ユーザ名"
-        ></v-text-field>
+        <v-text-field v-model="forms.name" :counter="10" :rules="nameRules" label="ユーザ名"></v-text-field>
         <v-text-field
           v-model="forms.email"
           :rules="emailRules"
           label="メールアドレス"
+          :error-messages="
+            emailError ? 'こちらのメールアドレスは既に登録されています' : ''
+          "
         ></v-text-field>
 
         <v-text-field
@@ -37,15 +35,8 @@
           @click:append="hidePasswordConfirm = !hidePasswordConfirm"
         ></v-text-field>
 
-        <v-btn
-          color="primary"
-          @click="submit"
-          :disabled="!valid || !confirmValid"
-          >アカウントを作成する</v-btn
-        >
-        <v-btn color="info" class="ml-4" @click="showSignin"
-          >アカウントをお持ちの方</v-btn
-        >
+        <v-btn color="primary" @click="submit" :disabled="!valid || !confirmValid">アカウントを作成する</v-btn>
+        <v-btn color="info" class="ml-4" @click="showSignin">アカウントをお持ちの方</v-btn>
       </v-form>
     </v-card>
   </v-layout>
@@ -53,7 +44,8 @@
 <script lang="ts">
 import { Vue, Component, Watch } from "nuxt-property-decorator";
 import Logo from "../components/Logo.vue";
-import { SignupFromDto } from "../domains/signup/SignupFromDto";
+import { SignupFromDto } from "../domains/auth/AuthFromsDto";
+import { CreateAuthApplication } from "../creates/auth/CreateAuthApplication";
 
 @Component
 export default class extends Vue {
@@ -69,6 +61,7 @@ export default class extends Vue {
     (v: string) => !!v || "ユーザ名は必須です。",
     (v: string) => (v && v.length <= 10) || "ユーザ名は最大10文字です。"
   ];
+  emailError = false;
   emailRules = [
     (v: string) => !!v || "メールアドレスは必須です。",
     (v: string) =>
@@ -110,8 +103,21 @@ export default class extends Vue {
     }
   }
 
-  submit() {
-    console.log(this.forms);
+  async submit() {
+    try {
+      const json_token = await CreateAuthApplication().Signup(this.forms);
+      this.$auth.setToken("local", json_token.token);
+      this.$auth.setUser({
+        email: this.forms.email
+      });
+      this.$router.push({
+        path: "/"
+      });
+    } catch (err) {
+      if (err.response.status === 409) {
+        this.emailError = true;
+      }
+    }
   }
 
   showSignin() {

@@ -1,3 +1,11 @@
+import VueRouter from "vue-router";
+declare module "vue/types/vue" {
+  interface Vue {
+    $auth: any;
+    $router: VueRouter;
+  }
+}
+
 export default {
   mode: "universal",
   router: {
@@ -31,7 +39,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [{ src: "~/plugins/localStorage.js", ssr: false }],
   /*
    ** Nuxt.js dev-modules
    */
@@ -39,7 +47,24 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ["@nuxtjs/axios"],
+  modules: ["@nuxtjs/axios", "@nuxtjs/auth"],
+  auth: {
+    redirect: {
+      login: "/signup", // 未ログイン時に認証ルートへアクセスした際のリダイレクトURL
+      logout: "/signin", // ログアウト時のリダイレクトURL
+      callback: false, // Oauth認証等で必要となる コールバックルート
+      home: false // ログイン後のリダイレクトURL
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: false,
+          user: false,
+          logout: false
+        }
+      }
+    }
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module

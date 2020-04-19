@@ -64,18 +64,18 @@
 <script lang="ts">
 import { Vue, Component } from "nuxt-property-decorator";
 import Logo from "../components/Logo.vue";
-import { CreateListApplication } from "../creates/list/CreateListApplication";
+import { Context } from "@nuxt/types";
 
 @Component({
   components: {
     Logo
   }
 })
-export default class IndexPage extends Vue {
-  aaa = "";
-
-  async created() {
-    this.aaa = await CreateListApplication().CreateList();
+export default class extends Vue {
+  middleware({ store, redirect }: Context) {
+    if (!store.state.auth.loggedIn) {
+      return redirect("/signin");
+    }
   }
 }
 </script>

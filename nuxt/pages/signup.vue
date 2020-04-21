@@ -3,7 +3,12 @@
     <v-card md="10" class="pa-6" width="500">
       <v-card-title>アカウントの作成</v-card-title>
       <v-form ref="form">
-        <v-text-field v-model="forms.name" :counter="10" :rules="nameRules" label="ユーザ名"></v-text-field>
+        <v-text-field
+          v-model="forms.name"
+          :counter="10"
+          :rules="nameRules"
+          label="ユーザ名"
+        ></v-text-field>
         <v-text-field
           v-model="forms.email"
           :rules="emailRules"
@@ -35,8 +40,15 @@
           @click:append="hidePasswordConfirm = !hidePasswordConfirm"
         ></v-text-field>
 
-        <v-btn color="primary" @click="submit" :disabled="!valid || !confirmValid">アカウントを作成する</v-btn>
-        <v-btn color="info" class="ml-4" @click="showSignin">アカウントをお持ちの方</v-btn>
+        <v-btn
+          color="primary"
+          @click="submit"
+          :disabled="!valid || !confirmValid"
+          >アカウントを作成する</v-btn
+        >
+        <v-btn color="info" class="ml-4" @click="showSignin"
+          >アカウントをお持ちの方</v-btn
+        >
       </v-form>
     </v-card>
   </v-layout>
@@ -107,9 +119,11 @@ export default class extends Vue {
     try {
       const json_token = await CreateAuthApplication().Signup(this.forms);
       this.$auth.setToken("local", json_token.token);
-      this.$auth.setUser({
-        email: this.forms.email
-      });
+
+      var jwtDecode = require("jwt-decode");
+      var decoded = jwtDecode(json_token.token);
+      this.$auth.setUser(decoded);
+
       this.$router.push({
         path: "/"
       });

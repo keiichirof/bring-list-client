@@ -1,6 +1,6 @@
 import { ListApplication } from "@/applications/list/ListApplication";
-import { ListRequeseterImpl } from "@/infras/list/ListRequesterImpl";
+import { ListRepositoryImpl } from "~/infras/lists/ListRepositoryImpl";
 
-export function CreateListApplication() {
-  return new ListApplication(new ListRequeseterImpl());
+export function CreateSaveListApplication(token: string) {
+  return new ListApplication(new ListRepositoryImpl(token));
 }

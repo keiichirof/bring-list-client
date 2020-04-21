@@ -73,9 +73,11 @@ export default class extends Vue {
     try {
       const json_token = await CreateAuthApplication().Signin(this.forms);
       this.$auth.setToken("local", json_token.token);
-      this.$auth.setUser({
-        email: this.forms.email
-      });
+
+      var jwtDecode = require("jwt-decode");
+      var decoded = jwtDecode(json_token.token);
+      this.$auth.setUser(decoded);
+
       this.$router.push({
         path: "/"
       });

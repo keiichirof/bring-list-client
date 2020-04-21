@@ -1,5 +1,6 @@
 export interface ListFormDto {
   name: string;
-  userId: Number;
-  isCalender: boolean;
+  userID: number;
+  tags: string[];
+  items: string[];
 }

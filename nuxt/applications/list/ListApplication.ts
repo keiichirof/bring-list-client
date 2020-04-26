@@ -1,16 +1,16 @@
-import { ListRepository } from "@/domains/list/ListRepository";
+import { ListRepository } from "~/domains/list/ListRepository";
 import { ListFormDto } from "@/domains/list/ListFormDto";
 
 // リストの機能を提供する
 export class ListApplication {
-  private listRequester: ListRepository;
+  private listRepository: ListRepository;
 
-  constructor(listRequester: ListRepository) {
-    this.listRequester = listRequester;
+  constructor(listRepository: ListRepository) {
+    this.listRepository = listRepository;
   }
 
   // リスト作成をする
-  async CreateList(formDto: ListFormDto): Promise<void> {
-    await this.listRequester.RequestList(formDto);
+  async SaveList(forms: ListFormDto): Promise<void> {
+    await this.listRepository.SaveList(forms);
   }
 }

@@ -44,6 +44,20 @@ export function GetDefaultAxios(baseURL: string) {
   });
 }
 
+// JWT認証のためtokenが必要な時に使う
+export function GetAxiosWithToken(baseURL: string, token: string = "") {
+  return Axios.default.create({
+    baseURL,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
+      Authorization: `Bearer ${token}`
+    },
+    responseType: "json"
+  });
+}
+
 interface Configs {
   params?: unknown;
   headers?: { [key: string]: string };

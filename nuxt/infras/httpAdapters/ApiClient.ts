@@ -40,10 +40,17 @@ export class ApiClient {
     return token;
   }
 
-  async SaveList(forms: ListFormDto): Promise<unknown> {
-    // formのデータとして認識させる
-    const params = new URLSearchParams();
-    params.append("name", forms.name);
-    return await this.axiosAdapterWithToken.Post("/savelist", { params }, {});
+  SaveList(forms: ListFormDto): Promise<unknown> {
+    return this.axiosAdapterWithToken.Post(
+      "/savelist",
+      {},
+      {
+        name: forms.name,
+        userID: forms.userID,
+        items: forms.items,
+        tags: forms.tags,
+        date: forms.date
+      }
+    );
   }
 }

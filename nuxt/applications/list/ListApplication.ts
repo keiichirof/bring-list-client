@@ -13,4 +13,9 @@ export class ListApplication {
   async SaveList(forms: ListFormDto): Promise<void> {
     await this.listRepository.SaveList(forms);
   }
+
+  // レコメンドを作成をする
+  async GetRecommend(tagName: string): Promise<unknown> {
+    return await this.listRepository.GetRecommend(tagName);
+  }
 }

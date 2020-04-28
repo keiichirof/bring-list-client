@@ -53,4 +53,14 @@ export class ApiClient {
       }
     );
   }
+
+  async GetRecommend(tagName: string): Promise<unknown> {
+    // formのデータとして認識させる
+    const params = new URLSearchParams();
+    params.append("tagName", tagName);
+    const data = (
+      await this.axiosAdapterWithToken.Get("/getRecommend", { params })
+    ).data;
+    return data;
+  }
 }

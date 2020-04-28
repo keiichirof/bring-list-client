@@ -13,4 +13,8 @@ export class ListRepositoryImpl implements ListRepository {
   async SaveList(forms: ListFormDto): Promise<void> {
     await new ApiClient(this.token).SaveList(forms);
   }
+
+  async GetRecommend(tagName: string): Promise<unknown> {
+    return await new ApiClient(this.token).GetRecommend(tagName);
+  }
 }

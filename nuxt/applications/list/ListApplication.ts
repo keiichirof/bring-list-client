@@ -1,5 +1,5 @@
 import { ListRepository } from "~/domains/list/ListRepository";
-import { ListFormDto } from "@/domains/list/ListFormDto";
+import { ListFormDto, Item } from "@/domains/list/ListFormDto";
 
 // リストの機能を提供する
 export class ListApplication {
@@ -12,5 +12,10 @@ export class ListApplication {
   // リスト作成をする
   async SaveList(forms: ListFormDto): Promise<void> {
     await this.listRepository.SaveList(forms);
+  }
+
+  // レコメンドを作成をする
+  async GetRecommend(tagName: string): Promise<Item[]> {
+    return await this.listRepository.GetRecommend(tagName);
   }
 }

@@ -20,6 +20,7 @@
                 multiple
                 chips
                 cache-items
+                @input="getRecommend"
               ></v-combobox>
 
               <v-menu
@@ -151,8 +152,8 @@
 import { Vue, Component, Watch } from "nuxt-property-decorator";
 import { Context } from "@nuxt/types";
 import { ApiClient } from "../../infras/httpAdapters/ApiClient";
-import { CreateSaveListApplication } from "../../creates/list/CreateListApplication";
-import { ListFormDto } from "../../domains/list/ListFormDto";
+import { CreateListApplication } from "../../creates/list/CreateListApplication";
+import { ListFormDto, Item } from "../../domains/list/ListFormDto";
 import draggable from "vuedraggable";
 
 @Component({
@@ -178,14 +179,8 @@ export default class extends Vue {
     date: new Date().toISOString().substr(0, 10)
   };
 
-  recommends = [
-    { tagin: 2, name: "帽子" },
-    { tagin: 2, name: "タオル" },
-    { tagin: 1, name: "水筒" },
-    { tagin: 1, name: "グローブ" }
-  ];
-
-  trash = [];
+  recommends: Item[] = [];
+  trash: Item[] = [];
 
   listNameRules = [(v: string) => !!v || "リスト名は必須です。"];
 
@@ -201,21 +196,21 @@ export default class extends Vue {
     this.inputItem = "";
   }
 
-  itemSendToItem(recommend) {
+  itemSendToItem(recommend: Item) {
     this.listForms.items.push(recommend);
     this.recommends = this.recommends.filter(obj => {
       return obj !== recommend;
     });
   }
 
-  itemSendToTrash(item) {
+  itemSendToTrash(item: Item) {
     this.listForms.items = this.listForms.items.filter(obj => {
       return obj !== item;
     });
     this.trash.push(item);
   }
 
-  recommendSendToTrash(recommend) {
+  recommendSendToTrash(recommend: Item) {
     this.recommends = this.recommends.filter(obj => {
       return obj !== recommend;
     });
@@ -225,9 +220,43 @@ export default class extends Vue {
   async submit() {
     const token = this.$auth.getToken("local");
     this.listForms.userID = this.$store.state.auth.user.id;
-    const json_token = await CreateSaveListApplication(token).SaveList(
+    const json_token = await CreateListApplication(token).SaveList(
       this.listForms
     );
+  }
+
+  async getRecommend() {
+    // 配列の最後を取得
+    const inputedTagName = this.listForms.tags[this.listForms.tags.length - 1];
+    const token = this.$auth.getToken("local");
+    const recommends = await CreateListApplication(token).GetRecommend(
+      inputedTagName
+    );
+    if (recommends !== null) {
+      this.createRecommend(recommends);
+    }
+  }
+
+  createRecommend(recommends: Item[]) {
+    recommends.forEach(recommend => {
+      // 既に存在するかの確認
+      const isRec = this.recommends.some(r => {
+        return r.name === recommend["name"] && r.tagin === recommend["tagin"];
+      });
+      const isItm = this.listForms.items.some(r => {
+        return r.name === recommend["name"] && r.tagin === recommend["tagin"];
+      });
+      if (!isRec && !isItm) {
+        this.recommends.push(recommend);
+      }
+    });
+    this.recommends.sort(function(a, b) {
+      if (a.tagin < b.tagin) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
   }
 
   @Watch("listForms", { deep: true })

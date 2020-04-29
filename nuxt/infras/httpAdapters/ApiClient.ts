@@ -4,7 +4,7 @@ import {
   GetDefaultAxios,
   GetAxiosWithToken
 } from "@/infras/httpAdapters/AxiosAdapter";
-import { ListFormDto } from "@/domains/list/ListFormDto.ts";
+import { ListFormDto, Item } from "@/domains/list/ListFormDto.ts";
 import { SignupFromDto, SigninFromDto } from "~/domains/auth/AuthFromsDto";
 import { AuthToken } from "@/infras/httpAdapters/Protcol";
 
@@ -54,7 +54,7 @@ export class ApiClient {
     );
   }
 
-  async GetRecommend(tagName: string): Promise<unknown> {
+  async GetRecommend(tagName: string): Promise<Item[]> {
     // formのデータとして認識させる
     const params = new URLSearchParams();
     params.append("tagName", tagName);

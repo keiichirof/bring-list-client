@@ -2,11 +2,11 @@ export interface ListFormDto {
   name: string;
   userID: number;
   tags: string[];
-  items: items[];
+  items: Item[];
   date: string;
 }
 
-export interface items {
+export interface Item {
   tagin: number;
   name: string;
 }

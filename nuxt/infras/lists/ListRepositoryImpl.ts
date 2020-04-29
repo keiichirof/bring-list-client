@@ -1,6 +1,6 @@
 import { ApiClient } from "@/infras/httpAdapters/ApiClient";
 import { ListRepository } from "~/domains/list/ListRepository";
-import { ListFormDto } from "@/domains/list/ListFormDto.ts";
+import { ListFormDto, Item } from "@/domains/list/ListFormDto.ts";
 
 // ListRepositoryの実装
 export class ListRepositoryImpl implements ListRepository {
@@ -14,7 +14,7 @@ export class ListRepositoryImpl implements ListRepository {
     await new ApiClient(this.token).SaveList(forms);
   }
 
-  async GetRecommend(tagName: string): Promise<unknown> {
+  async GetRecommend(tagName: string): Promise<Item[]> {
     return await new ApiClient(this.token).GetRecommend(tagName);
   }
 }

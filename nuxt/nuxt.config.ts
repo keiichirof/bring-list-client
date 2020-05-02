@@ -1,5 +1,16 @@
+import VueRouter from "vue-router";
+declare module "vue/types/vue" {
+  interface Vue {
+    $auth: any;
+    $router: VueRouter;
+  }
+}
+
 export default {
   mode: "universal",
+  router: {
+    base: "/"
+  },
   /*
    ** Headers of the page
    */
@@ -12,10 +23,10 @@ export default {
       {
         hid: "description",
         name: "description",
-        content: process.env.npm_package_description || "",
-      },
+        content: process.env.npm_package_description || ""
+      }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
   /*
    ** Customize the progress-bar color
@@ -28,7 +39,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [{ src: "~/plugins/localStorage.js", ssr: false }],
   /*
    ** Nuxt.js dev-modules
    */
@@ -36,16 +47,38 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: ["@nuxtjs/axios", "@nuxtjs/auth"],
+  auth: {
+    redirect: {
+      login: "/signup", // 未ログイン時に認証ルートへアクセスした際のリダイレクトURL
+      logout: "/signin", // ログアウト時のリダイレクトURL
+      callback: false, // Oauth認証等で必要となる コールバックルート
+      home: false // ログイン後のリダイレクトURL
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: false,
+          user: false,
+          logout: false
+        }
+      }
+    }
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
    */
   vuetify: {
-    customVariables: ["~/assets/variables.scss"],
     theme: {
-      dark: true,
-    },
+      dark: false
+    }
+  },
+  /*
+   ** env configuration
+   */
+  env: {
+    API_URL: process.env.API_URL || "http://34.97.204.124:18080"
   },
   /*
    ** Build configuration
@@ -54,10 +87,10 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config: any, ctx: any) {},
+    extend(config: any, ctx: any) {}
   },
   typescript: {
     typeCheck: true,
-    ignoreNotFoundWarnings: true,
-  },
+    ignoreNotFoundWarnings: true
+  }
 };

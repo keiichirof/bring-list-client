@@ -7,8 +7,9 @@
   "scripts": {
     "dev": "HOST=0.0.0.0 PORT=3000 nuxt-ts",
     "build": "nuxt-ts build",
+    "start": "nuxt-ts start --hostname 0.0.0.0 --port 3000 --max_old_space_size=1500 --optimize_for_size",
+    "build_start": "npm run build && npm run start",
     "generate": "nuxt-ts generate",
-    "start": "nuxt-ts start",
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {

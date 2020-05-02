@@ -1,6 +1,12 @@
 <template>
   <v-app light>
-    <v-navigation-drawer v-model="drawer" :clipped="clipped" fixed app>
+    <v-navigation-drawer
+      v-model="drawer"
+      :clipped="clipped"
+      fixed
+      app
+      v-if="$store.state.auth.loggedIn"
+    >
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -68,6 +74,10 @@ export default class extends Vue {
   right = true;
   rightDrawer = false;
   title = "Vuetify.js";
+
+  created() {
+    console.log("store.state.auth.loggedIn", this.$store.state.auth.loggedIn);
+  }
 
   async signout() {
     await this.$auth.logout("local");

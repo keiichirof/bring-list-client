@@ -4,7 +4,11 @@ import {
   GetDefaultAxios,
   GetAxiosWithToken
 } from "@/infras/httpAdapters/AxiosAdapter";
-import { ListFormDto, Item } from "@/domains/list/ListFormDto.ts";
+import {
+  ListFormDto,
+  Item,
+  ListsAndItems
+} from "@/domains/list/ListFormDto.ts";
 import { SignupFromDto, SigninFromDto } from "~/domains/auth/AuthFromsDto";
 import { AuthToken } from "@/infras/httpAdapters/Protcol";
 
@@ -60,6 +64,17 @@ export class ApiClient {
     params.append("tagName", tagName);
     const data = (
       await this.axiosAdapterWithToken.Get("/getRecommend", { params })
+    ).data;
+    return data;
+  }
+
+  async GetDayLists(userID: number, day: string): Promise<ListsAndItems[]> {
+    // formのデータとして認識させる
+    const params = new URLSearchParams();
+    params.append("userID", String(userID));
+    params.append("day", day);
+    const data = (
+      await this.axiosAdapterWithToken.Get("/getDayLists", { params })
     ).data;
     return data;
   }

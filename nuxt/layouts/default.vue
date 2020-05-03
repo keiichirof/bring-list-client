@@ -1,6 +1,12 @@
 <template>
   <v-app light>
-    <v-navigation-drawer v-model="drawer" :clipped="clipped" fixed app>
+    <v-navigation-drawer
+      v-model="drawer"
+      :clipped="clipped"
+      fixed
+      app
+      v-if="$store.state.auth.loggedIn"
+    >
       <v-list>
         <v-list-item
           v-for="(item, i) in items"

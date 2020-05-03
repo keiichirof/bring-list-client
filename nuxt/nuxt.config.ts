@@ -70,7 +70,7 @@ export default {
    ** env configuration
    */
   env: {
-    API_URL: process.env.API_URL || "http://localhost:18080"
+    API_URL: process.env.API_URL || "http://34.97.204.124:18080"
   },
   /*
    ** Build configuration

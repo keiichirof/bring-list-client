@@ -75,10 +75,6 @@ export default class extends Vue {
   rightDrawer = false;
   title = "Vuetify.js";
 
-  created() {
-    console.log("store.state.auth.loggedIn", this.$store.state.auth.loggedIn);
-  }
-
   async signout() {
     await this.$auth.logout("local");
   }

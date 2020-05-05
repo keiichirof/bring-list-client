@@ -78,4 +78,12 @@ export class ApiClient {
     ).data;
     return data;
   }
+
+  async GetLists(input: string): Promise<ListsAndItems[]> {
+    const params = new URLSearchParams();
+    params.append("input", input);
+    const data = (await this.axiosAdapterWithToken.Get("/getLists", { params }))
+      .data;
+    return data;
+  }
 }

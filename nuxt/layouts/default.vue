@@ -62,14 +62,24 @@ export default class extends Vue {
   items = [
     {
       icon: "mdi-apps",
-      title: "TopPage",
+      title: "持ち物確認",
       to: "/"
     },
     {
       icon: "mdi-chart-bubble",
       title: "リスト作成",
       to: "/list/save"
+    },
+    {
+      icon: "mdi-format-list-bulleted",
+      title: "みんなのリスト",
+      to: "/list/show"
     }
+    // {
+    //   icon: "mdi-more",
+    //   title: "みんなのリスト",
+    //   to: "/list/save"
+    // }
   ];
   right = true;
   rightDrawer = false;

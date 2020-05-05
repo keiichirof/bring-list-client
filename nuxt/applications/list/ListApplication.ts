@@ -19,8 +19,11 @@ export class ListApplication {
     return await this.listRepository.GetRecommend(tagName);
   }
 
-  // レコメンドを作成をする
   async GetDayLists(userID: number, day: string): Promise<ListsAndItems[]> {
     return await this.listRepository.GetDayLists(userID, day);
+  }
+
+  async GetLists(input: string): Promise<ListsAndItems[]> {
+    return await this.listRepository.GetLists(input);
   }
 }

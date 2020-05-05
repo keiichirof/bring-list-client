@@ -31,6 +31,9 @@
         >
       </v-form>
     </v-card>
+    <v-btn color="success" class="ma-4" @click="submitAdmin">
+      お試しユーザーでログイン
+    </v-btn>
   </v-layout>
 </template>
 <script lang="ts">
@@ -70,6 +73,27 @@ export default class extends Vue {
   }
 
   async submit() {
+    try {
+      const json_token = await CreateAuthApplication().Signin(this.forms);
+      this.$auth.setToken("local", json_token.token);
+
+      var jwtDecode = require("jwt-decode");
+      var decoded = jwtDecode(json_token.token);
+      this.$auth.setUser(decoded);
+
+      this.$router.push({
+        path: "/"
+      });
+    } catch (err) {
+      if (err.response.status === 401) {
+        this.authorizeError = true;
+      }
+    }
+  }
+
+  async submitAdmin() {
+    this.forms.email = "a@a.a";
+    this.forms.password = "87654321";
     try {
       const json_token = await CreateAuthApplication().Signin(this.forms);
       this.$auth.setToken("local", json_token.token);

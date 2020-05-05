@@ -78,4 +78,26 @@ export class ApiClient {
     ).data;
     return data;
   }
+
+  async GetLists(input: string): Promise<ListsAndItems[]> {
+    const params = new URLSearchParams();
+    params.append("input", input);
+    const data = (await this.axiosAdapterWithToken.Get("/getLists", { params }))
+      .data;
+    return data;
+  }
+
+  DeleteList(forms: ListFormDto): Promise<unknown> {
+    return this.axiosAdapterWithToken.Post(
+      "/deletelist",
+      {},
+      {
+        name: forms.name,
+        userID: forms.userID,
+        items: forms.items,
+        tags: forms.tags,
+        date: forms.date
+      }
+    );
+  }
 }

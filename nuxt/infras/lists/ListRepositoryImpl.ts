@@ -29,4 +29,8 @@ export class ListRepositoryImpl implements ListRepository {
   async GetLists(input: string): Promise<ListsAndItems[]> {
     return await new ApiClient(this.token).GetLists(input);
   }
+
+  async DeleteList(forms: ListFormDto): Promise<void> {
+    await new ApiClient(this.token).DeleteList(forms);
+  }
 }

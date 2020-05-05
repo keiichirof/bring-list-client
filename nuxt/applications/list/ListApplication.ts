@@ -26,4 +26,8 @@ export class ListApplication {
   async GetLists(input: string): Promise<ListsAndItems[]> {
     return await this.listRepository.GetLists(input);
   }
+
+  async DeleteList(forms: ListFormDto): Promise<void> {
+    return await this.listRepository.DeleteList(forms);
+  }
 }

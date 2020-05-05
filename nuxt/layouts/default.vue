@@ -1,5 +1,5 @@
 <template>
-  <v-app light>
+  <v-app dark>
     <v-navigation-drawer
       v-model="drawer"
       :clipped="clipped"
@@ -24,11 +24,8 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
+    <v-app-bar :clipped-left="clipped" fixed app color="primary" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-home</v-icon>
-      </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <v-tooltip bottom>
@@ -45,9 +42,6 @@
         <nuxt />
       </v-container>
     </v-content>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
   </v-app>
 </template>
 
@@ -75,15 +69,10 @@ export default class extends Vue {
       title: "みんなのリスト",
       to: "/list/show"
     }
-    // {
-    //   icon: "mdi-more",
-    //   title: "みんなのリスト",
-    //   to: "/list/save"
-    // }
   ];
   right = true;
   rightDrawer = false;
-  title = "Vuetify.js";
+  title = "BringList";
 
   async signout() {
     await this.$auth.logout("local");

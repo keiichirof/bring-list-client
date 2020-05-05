@@ -1,6 +1,12 @@
 <template>
   <div id="app">
     <v-container align-center pa-1>
+      <v-alert dense v-if="alert" text type="success">
+        リストを作成しました
+        <v-btn icon @click="alert = false">
+          <v-icon color="black">mdi-close</v-icon>
+        </v-btn>
+      </v-alert>
       <v-layout wrap justify-center>
         <v-flex xs12 sm5>
           <v-card class="pa-3">
@@ -168,6 +174,8 @@ export default class extends Vue {
 
   menu = false;
 
+  alert = false;
+
   inputItem = "";
 
   valid = false;
@@ -223,6 +231,7 @@ export default class extends Vue {
     const json_token = await CreateListApplication(token).SaveList(
       this.listForms
     );
+    this.alert = true;
   }
 
   async getRecommend() {

@@ -124,9 +124,7 @@ export default class extends Vue {
 
   async submit() {
     const token = this.$auth.getToken("local");
-    this.listsAndItems = await CreateListApplication(token).DeleteList(
-      this.listForms
-    );
+    await CreateListApplication(token).DeleteList(this.listForms);
     this.dialog = false;
     this.alert = true;
   }

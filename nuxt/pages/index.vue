@@ -17,6 +17,8 @@
               <v-date-picker
                 :day-format="date => new Date(date).getDate()"
                 v-model="date"
+                :events="listDays"
+                event-color="green lighten-1"
                 @input="menu = false"
                 locale="ja"
               ></v-date-picker>
@@ -95,6 +97,8 @@ export default class extends Vue {
     isTemplate: false
   };
 
+  listDays: string[] = [];
+
   async deleteList(index: number) {
     this.dialog = true;
     this.listForms.name = this.listsForView[index].name;
@@ -130,18 +134,20 @@ export default class extends Vue {
     this.date = this.today;
   }
 
-  async getList() {
+  async getPageData() {
     const token = this.$auth.getToken("local");
     const userID = this.$store.state.auth.user.id;
     this.listsForView = await CreateListApplication(token).GetDayLists(
       userID,
       this.date
     );
+
+    this.listDays = await CreateListApplication(token).GetAddedDays(userID);
   }
 
   @Watch("date")
   changeList() {
-    this.getList();
+    this.getPageData();
   }
 }
 </script>

@@ -77,6 +77,16 @@ export class ApiClient {
     return data;
   }
 
+  async GetAddedDays(userID: number): Promise<string[]> {
+    // formのデータとして認識させる
+    const params = new URLSearchParams();
+    params.append("userID", String(userID));
+    const data = (
+      await this.axiosAdapterWithToken.Get("/getAddedDays", { params })
+    ).data;
+    return data;
+  }
+
   async GetLists(input: string): Promise<ListsForView[]> {
     const params = new URLSearchParams();
     params.append("input", input);

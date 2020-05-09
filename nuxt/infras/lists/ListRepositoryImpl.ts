@@ -22,6 +22,10 @@ export class ListRepositoryImpl implements ListRepository {
     return await new ApiClient(this.token).GetDayLists(userID, day);
   }
 
+  async GetAddedDays(userID: number): Promise<string[]> {
+    return await new ApiClient(this.token).GetAddedDays(userID);
+  }
+
   async GetLists(input: string): Promise<ListsForView[]> {
     return await new ApiClient(this.token).GetLists(input);
   }

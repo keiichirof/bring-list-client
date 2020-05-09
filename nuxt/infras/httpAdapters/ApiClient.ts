@@ -4,11 +4,7 @@ import {
   GetDefaultAxios,
   GetAxiosWithToken
 } from "@/infras/httpAdapters/AxiosAdapter";
-import {
-  ListFormDto,
-  Item,
-  ListsAndItems
-} from "@/domains/list/ListFormDto.ts";
+import { ListFormDto, Item, ListsForView } from "@/domains/list/ListFormDto.ts";
 import { SignupFromDto, SigninFromDto } from "~/domains/auth/AuthFromsDto";
 import { AuthToken } from "@/infras/httpAdapters/Protcol";
 
@@ -53,7 +49,9 @@ export class ApiClient {
         userID: forms.userID,
         items: forms.items,
         tags: forms.tags,
-        date: forms.date
+        date: forms.date,
+        isTemplate: forms.isTemplate,
+        parentID: forms.parentID
       }
     );
   }
@@ -68,7 +66,7 @@ export class ApiClient {
     return data;
   }
 
-  async GetDayLists(userID: number, day: string): Promise<ListsAndItems[]> {
+  async GetDayLists(userID: number, day: string): Promise<ListsForView[]> {
     // formのデータとして認識させる
     const params = new URLSearchParams();
     params.append("userID", String(userID));
@@ -79,7 +77,7 @@ export class ApiClient {
     return data;
   }
 
-  async GetLists(input: string): Promise<ListsAndItems[]> {
+  async GetLists(input: string): Promise<ListsForView[]> {
     const params = new URLSearchParams();
     params.append("input", input);
     const data = (await this.axiosAdapterWithToken.Get("/getLists", { params }))

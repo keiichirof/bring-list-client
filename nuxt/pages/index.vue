@@ -10,18 +10,9 @@
       <v-col>
         <v-card min-width="350">
           <v-card-title class="headline">
-            <v-menu
-              v-model="menu"
-              :close-on-content-click="false"
-              min-width="290px"
-            >
+            <v-menu v-model="menu" :close-on-content-click="false" min-width="290px">
               <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="date"
-                  label="リストの日付を選択してください"
-                  readonly
-                  v-on="on"
-                ></v-text-field>
+                <v-text-field v-model="date" label="リストの日付を選択してください" readonly v-on="on"></v-text-field>
               </template>
               <v-date-picker
                 :day-format="date => new Date(date).getDate()"
@@ -32,11 +23,7 @@
             </v-menu>
           </v-card-title>
         </v-card>
-        <v-card
-          v-for="(list, index) in listsAndItems"
-          :key="index"
-          class="my-2"
-        >
+        <v-card v-for="(list, index) in listsForView" :key="index" class="my-2">
           <v-card-title class="title">
             {{ list.name }}の持ち物リスト
             <v-tooltip right>
@@ -78,7 +65,7 @@
 import { Vue, Component, Watch } from "nuxt-property-decorator";
 import Logo from "../components/Logo.vue";
 import { Context } from "@nuxt/types";
-import { ListFormDto, Item, ListsAndItems } from "../domains/list/ListFormDto";
+import { ListFormDto, Item, ListsForView } from "../domains/list/ListFormDto";
 import { CreateListApplication } from "../creates/list/CreateListApplication";
 
 @Component
@@ -95,24 +82,26 @@ export default class extends Vue {
   date = "";
   alert = false;
 
-  listsAndItems: ListsAndItems[] = [];
+  listsForView: ListsForView[] = [];
   selected: string[] = [];
 
   listForms: ListFormDto = {
+    parentID: 0,
     name: "",
     userID: 0,
     tags: [],
     items: [],
-    date: new Date().toISOString().substr(0, 10)
+    date: new Date().toISOString().substr(0, 10),
+    isTemplate: false
   };
 
   async deleteList(index: number) {
     this.dialog = true;
-    this.listForms.name = this.listsAndItems[index].name;
+    this.listForms.name = this.listsForView[index].name;
     this.listForms.userID = this.$store.state.auth.user.id;
 
-    if (this.listsAndItems[index].items !== null) {
-      this.listsAndItems[index].items.forEach(item => {
+    if (this.listsForView[index].items !== null) {
+      this.listsForView[index].items.forEach(item => {
         let obj = {
           tagin: 0,
           name: item.name
@@ -144,7 +133,7 @@ export default class extends Vue {
   async getList() {
     const token = this.$auth.getToken("local");
     const userID = this.$store.state.auth.user.id;
-    this.listsAndItems = await CreateListApplication(token).GetDayLists(
+    this.listsForView = await CreateListApplication(token).GetDayLists(
       userID,
       this.date
     );

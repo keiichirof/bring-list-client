@@ -4,6 +4,8 @@ export interface ListFormDto {
   tags: string[];
   items: Item[];
   date: string;
+  isTemplate: boolean;
+  parentID: number;
 }
 
 export interface Item {
@@ -15,7 +17,11 @@ export interface ItemOnlyName {
   name: string;
 }
 
-export interface ListsAndItems {
+export interface ListsForView {
+  id: number;
   name: string;
-  items: ItemOnlyName[];
+  items: Item[];
+  download: number;
+  createdAt: string;
+  isTemplate: boolean;
 }

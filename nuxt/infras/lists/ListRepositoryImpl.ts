@@ -1,10 +1,6 @@
 import { ApiClient } from "@/infras/httpAdapters/ApiClient";
 import { ListRepository } from "~/domains/list/ListRepository";
-import {
-  ListFormDto,
-  Item,
-  ListsAndItems
-} from "@/domains/list/ListFormDto.ts";
+import { ListFormDto, Item, ListsForView } from "@/domains/list/ListFormDto.ts";
 
 // ListRepositoryの実装
 export class ListRepositoryImpl implements ListRepository {
@@ -22,11 +18,11 @@ export class ListRepositoryImpl implements ListRepository {
     return await new ApiClient(this.token).GetRecommend(tagName);
   }
 
-  async GetDayLists(userID: number, day: string): Promise<ListsAndItems[]> {
+  async GetDayLists(userID: number, day: string): Promise<ListsForView[]> {
     return await new ApiClient(this.token).GetDayLists(userID, day);
   }
 
-  async GetLists(input: string): Promise<ListsAndItems[]> {
+  async GetLists(input: string): Promise<ListsForView[]> {
     return await new ApiClient(this.token).GetLists(input);
   }
 

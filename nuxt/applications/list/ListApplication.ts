@@ -1,5 +1,5 @@
 import { ListRepository } from "~/domains/list/ListRepository";
-import { ListFormDto, Item, ListsAndItems } from "@/domains/list/ListFormDto";
+import { ListFormDto, Item, ListsForView } from "@/domains/list/ListFormDto";
 
 // リストの機能を提供する
 export class ListApplication {
@@ -19,11 +19,11 @@ export class ListApplication {
     return await this.listRepository.GetRecommend(tagName);
   }
 
-  async GetDayLists(userID: number, day: string): Promise<ListsAndItems[]> {
+  async GetDayLists(userID: number, day: string): Promise<ListsForView[]> {
     return await this.listRepository.GetDayLists(userID, day);
   }
 
-  async GetLists(input: string): Promise<ListsAndItems[]> {
+  async GetLists(input: string): Promise<ListsForView[]> {
     return await this.listRepository.GetLists(input);
   }
 

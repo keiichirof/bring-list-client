@@ -35,7 +35,7 @@ export class ListApplication {
   }
 
   // リストを削除
-  async DeleteList(forms: ListFormDto): Promise<void> {
+  async DeleteList(forms: ListsForView): Promise<void> {
     return await this.listRepository.DeleteList(forms);
   }
 }

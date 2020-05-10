@@ -24,4 +24,5 @@ export interface ListsForView {
   download: number;
   createdAt: string;
   isTemplate: boolean;
+  userID: number;
 }

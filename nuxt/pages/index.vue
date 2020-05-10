@@ -67,7 +67,7 @@
 import { Vue, Component, Watch } from "nuxt-property-decorator";
 import Logo from "../components/Logo.vue";
 import { Context } from "@nuxt/types";
-import { ListFormDto, Item, ListsForView } from "../domains/list/ListFormDto";
+import { Item, ListsForView } from "../domains/list/ListFormDto";
 import { CreateListApplication } from "../creates/list/CreateListApplication";
 
 @Component
@@ -85,39 +85,21 @@ export default class extends Vue {
   alert = false;
 
   listsForView: ListsForView[] = [];
+  deleteTarget = 0;
   selected: string[] = [];
-
-  listForms: ListFormDto = {
-    parentID: 0,
-    name: "",
-    userID: 0,
-    tags: [],
-    items: [],
-    date: new Date().toISOString().substr(0, 10),
-    isTemplate: false
-  };
 
   listDays: string[] = [];
 
   async deleteList(index: number) {
     this.dialog = true;
-    this.listForms.name = this.listsForView[index].name;
-    this.listForms.userID = this.$store.state.auth.user.id;
-
-    if (this.listsForView[index].items !== null) {
-      this.listsForView[index].items.forEach(item => {
-        let obj = {
-          tagin: 0,
-          name: item.name
-        };
-        this.listForms.items.push(obj);
-      });
-    }
+    this.deleteTarget = index;
   }
 
   async submit() {
     const token = this.$auth.getToken("local");
-    await CreateListApplication(token).DeleteList(this.listForms);
+    const list = this.listsForView[this.deleteTarget];
+    await CreateListApplication(token).DeleteList(list);
+    this.listsForView.splice(this.deleteTarget, 1);
     this.dialog = false;
     this.alert = true;
   }

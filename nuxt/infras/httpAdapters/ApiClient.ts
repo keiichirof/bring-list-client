@@ -95,16 +95,14 @@ export class ApiClient {
     return data;
   }
 
-  DeleteList(forms: ListFormDto): Promise<unknown> {
+  DeleteList(forms: ListsForView): Promise<unknown> {
     return this.axiosAdapterWithToken.Post(
       "/deletelist",
       {},
       {
         name: forms.name,
         userID: forms.userID,
-        items: forms.items,
-        tags: forms.tags,
-        date: forms.date
+        createdAt: forms.createdAt
       }
     );
   }

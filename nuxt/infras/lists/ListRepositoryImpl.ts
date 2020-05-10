@@ -30,7 +30,7 @@ export class ListRepositoryImpl implements ListRepository {
     return await new ApiClient(this.token).GetLists(input);
   }
 
-  async DeleteList(forms: ListFormDto): Promise<void> {
+  async DeleteList(forms: ListsForView): Promise<void> {
     await new ApiClient(this.token).DeleteList(forms);
   }
 }

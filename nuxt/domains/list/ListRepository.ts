@@ -6,5 +6,5 @@ export interface ListRepository {
   GetDayLists(userID: number, day: string): Promise<ListsForView[]>;
   GetAddedDays(userID: number): Promise<string[]>;
   GetLists(input: string): Promise<ListsForView[]>;
-  DeleteList(listFormDto: ListFormDto): Promise<void>;
+  DeleteList(listFormDto: ListsForView): Promise<void>;
 }

@@ -4,7 +4,7 @@ import {
   GetDefaultAxios,
   GetAxiosWithToken
 } from "@/infras/httpAdapters/AxiosAdapter";
-import { ListFormDto } from "@/domains/list/ListFormDto.ts";
+import { ListFormDto, Item, ListsForView } from "@/domains/list/ListFormDto.ts";
 import { SignupFromDto, SigninFromDto } from "~/domains/auth/AuthFromsDto";
 import { AuthToken } from "@/infras/httpAdapters/Protcol";
 
@@ -49,7 +49,60 @@ export class ApiClient {
         userID: forms.userID,
         items: forms.items,
         tags: forms.tags,
-        date: forms.date
+        date: forms.date,
+        isTemplate: forms.isTemplate,
+        parentID: forms.parentID
+      }
+    );
+  }
+
+  async GetRecommend(tagName: string): Promise<Item[]> {
+    // formのデータとして認識させる
+    const params = new URLSearchParams();
+    params.append("tagName", tagName);
+    const data = (
+      await this.axiosAdapterWithToken.Get("/getRecommend", { params })
+    ).data;
+    return data;
+  }
+
+  async GetDayLists(userID: number, day: string): Promise<ListsForView[]> {
+    // formのデータとして認識させる
+    const params = new URLSearchParams();
+    params.append("userID", String(userID));
+    params.append("day", day);
+    const data = (
+      await this.axiosAdapterWithToken.Get("/getDayLists", { params })
+    ).data;
+    return data;
+  }
+
+  async GetAddedDays(userID: number): Promise<string[]> {
+    // formのデータとして認識させる
+    const params = new URLSearchParams();
+    params.append("userID", String(userID));
+    const data = (
+      await this.axiosAdapterWithToken.Get("/getAddedDays", { params })
+    ).data;
+    return data;
+  }
+
+  async GetLists(input: string): Promise<ListsForView[]> {
+    const params = new URLSearchParams();
+    params.append("input", input);
+    const data = (await this.axiosAdapterWithToken.Get("/getLists", { params }))
+      .data;
+    return data;
+  }
+
+  DeleteList(forms: ListsForView): Promise<unknown> {
+    return this.axiosAdapterWithToken.Post(
+      "/deletelist",
+      {},
+      {
+        name: forms.name,
+        userID: forms.userID,
+        createdAt: forms.createdAt
       }
     );
   }

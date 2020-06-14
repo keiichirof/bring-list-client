@@ -1,11 +1,3 @@
-import VueRouter from "vue-router";
-declare module "vue/types/vue" {
-  interface Vue {
-    $auth: any;
-    $router: VueRouter;
-  }
-}
-
 export default {
   mode: "universal",
   router: {
@@ -15,7 +7,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    titleTemplate: "%s - " + process.env.npm_package_name,
+    titleTemplate: "bring-list",
     title: process.env.npm_package_name || "",
     meta: [
       { charset: "utf-8" },
